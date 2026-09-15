@@ -1,0 +1,19 @@
+# ビルド生成物
+build/
+*.exe
+*.pdb
+*.ilk
+*.lib
+*.obj
+
+# IDE の設定ファイル
+.vscode/
+.idea/
+*.sln
+*.swp
+*.bak
+
+# CMake 関連
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
