@@ -1,11 +1,51 @@
 #pragma once
 
-#include "neon_osero.hpp"
+#include <array>
+#include <string>
+#include <functional>
 #include <memory>
 
 namespace neon_osero {
 
-class SoundEngine;
+// ────── 基本定数と型 ───────────────────────────────────────────────────┐
+constexpr int BOARD_SIZE = 8;
+enum class Color : unsigned char { EMPTY, BLACK, WHITE };
+enum class ColorMode { NEON, RAINBOW, RETRO };
+// ───────────────────────────────────────────────────────────────────────┘
+
+struct GameConfig {
+    bool enable_sound{false};           // SE を有効にするか
+    float limit_time_seconds{0.0f};     // タイムリミットモードの制限時間（秒）
+    bool flash_burst_available{true};    // 閃光弾の使用可否
+    ColorMode color_mode{ColorMode::NEON}; // 視覚エフェクトモード
+
+    float limit_gauge = 0.0f;           // リミットゲージ（0.0〜1.0）
+
+    void reset_limit_gauge() {
+        limit_gauge = 0.0f;
+        flash_burst_available = false;
+    }
+};
+
+// ────── Sound Engine ───────────────────────────────────────────────────┐
+class SoundEngine {
+public:
+    enum class SoundId : uint32_t {
+        SFX_PLACE,      // 碁石を置く音
+        SFX_FLIP,       // 相手の碁を反転させる音
+        SFX_LIMIT_BURST,// 閃光弾発動の演出音
+        SFX_GAME_OVER,  // ゲーム終了演出音
+        SFX_WIN,        // 勝利演出音
+    };
+
+    void init();
+    void play_sound(SoundId id) const;
+    void set_event_callback(std::function<void(const SoundId&)> callback);
+
+private:
+    bool enabled_ = false;
+    std::function<void(const SoundId&)> event_callback_;
+};
 
 // ────── Game Engine ───────────────────────────────────────────────────┐
 class GameEngine {
