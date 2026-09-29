@@ -29,8 +29,9 @@ add_executable(NeonOsero
 
 target_link_libraries(NeonOsero PRIVATE neon_oserо glfw)
 
-# テスト
-enable_testing()
-include(CTest)
-
-add_subdirectory(tests)
+# テスト（tests ディレクトリが存在しない場合はスキップ）
+if(EXISTS "${CMAKE_SOURCE_DIR}/tests")
+  enable_testing()
+  include(CTest)
+  add_subdirectory(tests)
+endif()
