@@ -5,9 +5,8 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# OpenGL/GLFW 関連の設定
+# OpenGL/GLFW 関連の設定（コンソールモード用）
 find_package(OpenGL REQUIRED)
-find_package(glfw3 CONFIG REQUIRED)
 
 # ネオン・オセロのメインライブラリ
 add_library(neon_osero STATIC
@@ -19,7 +18,7 @@ add_library(neon_osero STATIC
 )
 
 target_include_directories(neon_osero PUBLIC include)
-target_link_libraries(neon_osero PRIVATE OpenGL::GL glfw)
+target_link_libraries(neon_osero PRIVATE OpenGL::GL)
 
 # メインエグゼキュートファイル
 add_executable(NeonOsero
